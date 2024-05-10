@@ -1,0 +1,52 @@
+[project]
+name = "second"
+version = "0.1.0"
+description = "Add a short description here"
+authors = [{ name = "Rahul Dave", email = "rahuldave@gmail.com" }]
+requires-python = ">= 3.11"
+dependencies = []
+
+[project.optional-dependencies]
+test = ["coverage[toml]"]
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[tool.pixi.project]
+channels = ["conda-forge"]
+platforms = ["osx-arm64"]
+
+[tool.pixi.tasks]
+second = "python second/console.py"
+
+[tool.pixi.dependencies]
+pixi-kernel = ">=0.3.0,<0.4"
+jupyterlab = ">=4.2.0,<4.3"
+python = ">=3.12.3,<3.13"
+ipykernel = ">=6.29.3,<6.30"
+click = ">=8.1.7,<8.2"
+
+[tool.pixi.pypi-dependencies]
+second = { path = ".", editable = true }
+
+[tool.pixi.feature.test.dependencies]
+pytest = ">=7.2.0,<8.3"
+pytest-cov = ">=5.0.0,<5.1"
+pytest-mock = ">=3.14.0,<3.15"
+
+[tool.pixi.feature.test.tasks]
+test = "pytest"
+
+# Environments
+[tool.pixi.environments]
+default = { solve-group = "default" }
+test = { features = ["test"], solve-group = "default" }
+
+[tool.coverage.paths]
+source = ["second"]
+[tool.coverage.run]
+branch = true
+source = ["second"]
+[tool.coverage.report]
+show_missing = true
